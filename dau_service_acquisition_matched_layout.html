@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Acquisition Process Overview</title>
+  <style>
+    :root{
+      --navy:#0f2b46;
+      --navy-2:#163a5b;
+      --teal:#2b7a78;
+      --teal-soft:#dcefee;
+      --gold:#d6b25e;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#5b6470;
+      --border:#d9e1e8;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.55;
+    }
+
+    .topbar{
+      background:var(--navy);
+      color:#fff;
+      border-bottom:4px solid var(--gold);
+      box-shadow:0 2px 12px rgba(0,0,0,.14);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .topbar-inner{
+      max-width:1280px;
+      margin:0 auto;
+      padding:14px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(145deg,#234c72,#0c233a);
+      border:2px solid rgba(255,255,255,.18);
+      font-weight:700;
+      letter-spacing:.04em;
+      flex:0 0 auto;
+    }
+
+    .brand-text h1{
+      margin:0;
+      font-size:1.12rem;
+      line-height:1.1;
+      font-weight:700;
+    }
+
+    .brand-text p{
+      margin:3px 0 0;
+      font-size:.9rem;
+      color:rgba(255,255,255,.82);
+    }
+
+    .header-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .header-links a{
+      color:#fff;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(255,255,255,.06);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:.9rem;
+    }
+
+    .layout{
+      max-width:1280px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:300px minmax(0, 1fr);
+      gap:26px;
+      padding:28px 20px 36px;
+    }
+
+    aside{
+      position:sticky;
+      top:84px;
+      align-self:start;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:0 8px 24px rgba(15,43,70,.06);
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+
+    .panel-header{
+      background:linear-gradient(180deg,var(--navy-2),var(--navy));
+      color:#fff;
+      padding:14px 18px;
+      font-size:.96rem;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+
+    .toc{
+      padding:10px 0;
+    }
+
+    .toc a{
+      display:block;
+      color:var(--text);
+      text-decoration:none;
+      padding:10px 18px;
+      border-left:4px solid transparent;
+      font-size:.96rem;
+    }
+
+    .toc a:hover{
+      background:#f7fafc;
+      border-left-color:var(--teal);
+      color:var(--navy);
+    }
+
+    .mini{
+      padding:16px 18px 18px;
+    }
+
+    .mini p,.mini li{
+      color:var(--muted);
+      font-size:.93rem;
+      margin:.4rem 0;
+    }
+
+    .mini ul{
+      margin:.2rem 0 0;
+      padding-left:18px;
+    }
+
+    main{
+      min-width:0;
+    }
+
+    .hero{
+      background:
+        linear-gradient(180deg, rgba(15,43,70,.93), rgba(22,58,91,.94)),
+        radial-gradient(circle at top right, rgba(214,178,94,.24), transparent 35%);
+      color:#fff;
+      border-radius:20px;
+      padding:34px 34px 26px;
+      box-shadow:0 14px 30px rgba(15,43,70,.18);
+      margin-bottom:22px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:.85rem;
+      letter-spacing:.03em;
+      margin-bottom:14px;
+    }
+
+    .hero h2{
+      margin:0 0 10px;
+      font-size:2rem;
+      line-height:1.15;
+    }
+
+    .hero p{
+      margin:0;
+      max-width:850px;
+      color:rgba(255,255,255,.88);
+      font-size:1rem;
+    }
+
+    .overview-strip{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:20px;
+    }
+
+    .overview-box{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:14px 15px;
+    }
+
+    .overview-box strong{
+      display:block;
+      font-size:1.15rem;
+      margin-bottom:4px;
+    }
+
+    .content-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:24px;
+      box-shadow:0 8px 24px rgba(15,43,70,.06);
+      margin-bottom:18px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:10px;
+    }
+
+    .step-badge-plan{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#adccff;
+      color:var(--navy);
+      font-weight:700;
+      flex:0 0 auto;
+      border:1px solid #adccffs;
+    }
+     .step-badge-dev{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#f8ffb6c8;
+      color:var(--navy);
+      font-weight:700;
+      flex:0 0 auto;
+      border:1px solid #f6fea7;
+    }
+     .step-badge-exec{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#f8e3cb;
+      color:var(--navy);
+      font-weight:700;
+      flex:0 0 auto;
+      border:1px solid #f8e3cb;
+    }
+    .content-card h3{
+      margin:0;
+      color:var(--navy);
+      font-size:1.3rem;
+    }
+
+    .content-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    .highlight{
+      margin-top:16px;
+      padding:14px 16px;
+      background:#f8fbfd;
+      border:1px solid #e8eef4;
+      border-radius:14px;
+      color:#425063;
+      font-size:.95rem;
+    }
+
+    footer{
+      margin-top:26px;
+      background:var(--navy);
+      color:#e6edf4;
+      border-top:4px solid var(--gold);
+    }
+
+    .footer-inner{
+      max-width:1280px;
+      margin:0 auto;
+      padding:26px 20px 34px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:24px;
+    }
+
+    footer h4{
+      margin:0 0 10px;
+      color:#fff;
+    }
+
+    footer p, footer li{
+      margin:.35rem 0;
+      color:#d5dfeb;
+      font-size:.95rem;
+    }
+
+    footer ul{
+      padding-left:18px;
+      margin:0;
+    }
+
+    footer a{
+      color:#fff;
+      text-decoration:none;
+    }
+
+    @media (max-width: 980px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+      aside{
+        position:static;
+      }
+      .overview-strip{
+        grid-template-columns:1fr;
+      }
+      .footer-inner{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 700px){
+      .topbar-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .hero{
+        padding:26px 20px 22px;
+      }
+      .hero h2{
+        font-size:1.6rem;
+      }
+      .content-card{
+        padding:20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        
+        <div class="brand-text">
+          <h1>Overview of the Service Acquisition Process</h1>
+          
+        </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <div class="panel">
+        <div class="panel-header">Service Acquisition Process</div>
+        <nav class="toc">
+          <a href="#step1">1. Form the Team</a>
+          <a href="#step2">2. Review Current Strategy</a>
+          <a href="#step3">3. Market Research</a>
+          <a href="#step4">4. Requirements Definition</a>
+          <a href="#step5">5. Acquisition Strategy</a>
+          <a href="#step6">6. Execute Strategy</a>
+          <a href="#step7">7. Performance Management</a>
+        </nav>
+      </div>
+
+      
+
+    </aside>
+
+    <main>
+      <div style="margin-top:30px; text-align:center;">
+      <img 
+        src="process-phases.png"
+        alt="Planning Development Execution Phases"
+        style="width:100%; max-width:1100px; display:block; margin:auto;">
+  </div>
+  <div>
+    <p></p>
+  </div>
+
+      <section id="steps">
+        <article class="content-card" id="step1">
+          <div class="section-title">
+            <div class="step-badge-plan">1</div>
+            <h3>Form the Team</h3>
+          </div>
+          <p>
+            Starting any service acquisition requires an integrated, cross functional team effort. It 
+            takes many perspectives to understand and develop the requirement and the acquisition strategy to 
+            achieve the needed mission outcomes.
+          </p>
+          
+        </article>
+
+        <article class="content-card" id="step2">
+          <div class="section-title">
+            <div class="step-badge-plan">2</div>
+            <h3>Review Current Strategy</h3>
+          </div>
+          <p>
+            Reviewing the Current Strategy, Step Two of the Service Acquisition process, captures your current condition and identifies what improvements are needed. 
+            This step begins the process of identifying the risks associated with your acquisition and how they will be addressed in your planning.
+          </p>
+        </article>
+
+        <article class="content-card" id="step3">
+          <div class="section-title">
+            <div class="step-badge-plan">3</div>
+            <h3>Market Research</h3>
+          </div>
+          <p>
+            Market Research is a cross functional responsibility. It identifies providers of the type of service to acquire. This can inform you of how other organizations, both public and private, define and acquire these services. Good Market Research builds a solid foundation for your acquisition strategy and will help shape how you structure your performance requirement.
+          </p>
+          
+        </article>
+
+        <article class="content-card" id="step4">
+          <div class="section-title">
+            <div class="step-badge-dev">4</div>
+            <h3>Requirements Definition</h3>
+          </div>
+          <p>
+            Requirements Definition is the most important and perhaps the hardest step because it captures all aspects of the requirement you want to put on the contract. During this phase you will complete your risk analysis, Independent Government Cost Estimate (IGE), and requirements document. The Requirements Roadmap tool is used to develop key documents such as your Performance Work Statement (PWS), Statement of Objectives (SOO), or Quality Assurance Surveillance Plan (QASP).
+
+
+          </p>
+          
+        </article>
+
+        <article class="content-card" id="step5">
+          <div class="section-title">
+            <div class="step-badge-dev">5</div>
+            <h3>Acquisition Strategy</h3>
+          </div>
+          <p>
+           Your Acquisition Strategy determines the business arrangement (type of contract and incentive arrangement) that will exist between you and the contractor and the method you will use in selecting the contractor.
+          </p>
+      
+        </article>
+
+        <article class="content-card" id="step6">
+          <div class="section-title">
+            <div class="step-badge-exec">6</div>
+            <h3>Execute the Strategy</h3>
+          </div>
+          <p>
+            Execute the Strategy puts all your planning and development into action resulting in a good contract award. It provides an opportunity to seek industry feedback to refine your requirement and ensure a healthy competition and best value for your stakeholder.
+          </p>
+          
+        </article>
+
+        <article class="content-card" id="step7">
+          <div class="section-title">
+            <div class="step-badge-exec">7</div>
+            <h3>Performance Management</h3>
+          </div>
+          <p>
+            During Step Seven of the Acquisition process, you will Manage the Performance during the life of the contract. This is the goal of the preceding six steps because it starts the delivery of the services your stakeholders and customers rely on to execute their mission. Performance must be continuously reviewed and adjusted as requirements or funding change.
+          </p>
+          
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <footer id="resources">
+    <div class="footer-inner">
+      <div>
+        <h4>About This Page</h4>
+        <p>
+          This is a static landing page.
+        </p>
+      </div>
+    
+    </div>
+  </footer>
+</body>
+</html>
